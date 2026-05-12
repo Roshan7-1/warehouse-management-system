@@ -23,4 +23,12 @@ public class SupplierService {
     public List<Supplier> getAll() {
         return repository.findAll();
     }
+
+    public Supplier getById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

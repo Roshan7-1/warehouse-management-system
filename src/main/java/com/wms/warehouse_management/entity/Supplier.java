@@ -1,9 +1,8 @@
 package com.wms.warehouse_management.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Supplier {
@@ -12,11 +11,15 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @Email
     private String email;
 
     private String phone;
+
+    private String address;
 
     public Supplier() {
     }
@@ -37,6 +40,10 @@ public class Supplier {
         return phone;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -51,5 +58,9 @@ public class Supplier {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
