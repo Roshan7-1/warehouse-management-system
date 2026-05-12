@@ -18,7 +18,7 @@ public class WarehouseController {
     }
 
     @PostMapping
-    public Warehouse save(@RequestBody Warehouse warehouse) {
+    public Warehouse create(@RequestBody Warehouse warehouse) {
         return service.save(warehouse);
     }
 

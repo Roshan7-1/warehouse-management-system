@@ -13,6 +13,8 @@ public class Warehouse {
 
     private String location;
 
+    private Integer capacity;
+
     public Warehouse() {
     }
 
@@ -28,6 +30,10 @@ public class Warehouse {
         return location;
     }
 
+    public Integer getCapacity() {
+        return capacity;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -38,5 +44,9 @@ public class Warehouse {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 }
