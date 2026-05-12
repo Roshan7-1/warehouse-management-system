@@ -18,16 +18,15 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/auth/**").permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
             )
-        .httpBasic(httpBasic -> {});
+            .httpBasic(httpBasic -> {});
 
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 }
