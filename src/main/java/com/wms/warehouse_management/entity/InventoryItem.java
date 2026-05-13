@@ -1,4 +1,7 @@
+
 package com.wms.warehouse_management.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
@@ -12,9 +15,11 @@ public class InventoryItem {
     private int quantity;
 
     @ManyToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Product product;
 
     @ManyToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private StorageBin storageBin;
 
     public InventoryItem() {

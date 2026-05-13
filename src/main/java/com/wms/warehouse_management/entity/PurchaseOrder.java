@@ -1,12 +1,11 @@
+
 package com.wms.warehouse_management.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
 
 @Entity
 public class PurchaseOrder {
@@ -20,6 +19,7 @@ public class PurchaseOrder {
     private String status;
 
     @ManyToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Supplier supplier;
 
     public PurchaseOrder() {
