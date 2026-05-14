@@ -1,7 +1,7 @@
 # Enterprise Warehouse Management System (WMS)
 
 ## Overview
-A cloud-based Warehouse Management System developed using Java Spring Boot and PostgreSQL.
+ Warehouse Management System developed using Java Spring Boot and PostgreSQL.
 
 ## Features
 - Product Management
