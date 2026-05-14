@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Warehouse Management System</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            margin: 40px;
+            background: #f4f4f4;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 220px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            min-height: 120px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🏭 WMS Dashboard</h1>
+
+    <h3>🔑 Login</h3>
+
+    <input type="text"
+           id="username"
+           placeholder="Email"
+           value="admin@gmail.com">
+
+    <input type="password"
+           id="password"
+           placeholder="Password"
+           value="admin123">
+
+    <button onclick="login()">
+        Login
+    </button>
+
+    <p id="token-display"
+       style="color: green; font-size: 12px;">
+    </p>
+
+    <hr>
+
+    <h3>📦 API Tests</h3>
+
+    <button onclick="getProducts()">
+        Get All Products
+    </button>
+
+    <button onclick="createOrder()">
+        Create Order
+    </button>
+
+    <button onclick="getOrder()">
+        Get Order Status
+    </button>
+
+    <div id="output">
+        Click a button to test the API...
+    </div>
+
+</div>
+
+<script>
+
+    let token = '';
+
+    const BASE_URL = 'http://localhost:8080';
+
+    async function login() {
+
+        try {
+
+            const username =
+                document.getElementById('username').value;
+
+            const password =
+                document.getElementById('password').value;
+
+            const response = await fetch(
+                `${BASE_URL}/auth/login`,
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+
+                    body: JSON.stringify({
+                        email: username,
+                        password: password
+                    })
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const data = await response.json();
+
+            token = data.token;
+
+            document.getElementById('token-display')
+                .innerText =
+                '✅ Login Successful';
+
+            document.getElementById('output')
+                .innerText =
+                JSON.stringify(data, null, 2);
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById('output')
+                .innerText =
+                '❌ Login failed';
+        }
+    }
+
+    async function getProducts() {
+
+        try {
+
+            const response = await fetch(
+                `${BASE_URL}/products`
+            );
+
+            const data = await response.json();
+
+            document.getElementById('output')
+                .innerText =
+                JSON.stringify(data, null, 2);
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById('output')
+                .innerText =
+                '❌ Failed to load products';
+        }
+    }
+
+    async function createOrder() {
+
+        try {
+
+            const orderNum = 'ORD-' + Date.now();
+
+            const response = await fetch(
+                `${BASE_URL}/orders/create?orderNumber=${orderNum}`,
+                {
+                    method: 'POST'
+                }
+            );
+
+            const data = await response.json();
+
+            document.getElementById('output')
+                .innerText =
+                '✅ Order Created\n\n' +
+                JSON.stringify(data, null, 2);
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById('output')
+                .innerText =
+                '❌ Failed to create order';
+        }
+    }
+
+    async function getOrder() {
+
+        try {
+
+            const response = await fetch(
+                `${BASE_URL}/orders/ORD-001`
+            );
+
+            const data = await response.json();
+
+            document.getElementById('output')
+                .innerText =
+                JSON.stringify(data, null, 2);
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById('output')
+                .innerText =
+                '❌ Failed to get order';
+        }
+    }
+
+</script>
+
+</body>
+</html>
